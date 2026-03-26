@@ -9,22 +9,25 @@
     :root {
       --bg: #f7f8fa;
       --bg-soft: #ffffff;
-      --card: rgba(255, 255, 255, 0.92);
+      --surface: rgba(255, 255, 255, 0.92);
+      --surface-soft: rgba(255, 255, 255, 0.86);
       --line: rgba(15, 23, 42, 0.08);
-      --line-strong: rgba(15, 23, 42, 0.12);
+      --line-strong: rgba(15, 23, 42, 0.14);
       --text: #111827;
       --muted: #6b7280;
       --primary: #0f172a;
       --accent: #2563eb;
       --accent-deep: #1d4ed8;
-      --accent-soft: rgba(37, 99, 235, 0.10);
-      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-      --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.05);
+      --accent-soft: rgba(37, 99, 235, 0.1);
+      --shadow-lg: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --shadow-md: 0 12px 30px rgba(15, 23, 42, 0.05);
+      --shadow-sm: 0 8px 20px rgba(15, 23, 42, 0.04);
       --radius-xl: 30px;
       --radius-lg: 24px;
       --radius-md: 18px;
       --radius-sm: 14px;
       --container: 1180px;
+      --transition: 0.25s ease;
     }
 
     * {
@@ -47,11 +50,18 @@
         linear-gradient(180deg, #f8fafc 0%, #f7f8fa 45%, #f3f4f6 100%);
       line-height: 1.65;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
     }
 
     a {
       color: inherit;
       text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
     }
 
     .container {
@@ -77,24 +87,25 @@
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 14px;
+      min-width: 0;
     }
 
     .brand-mark {
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
       background: linear-gradient(135deg, #111827, #2563eb);
       color: #fff;
       font-size: 18px;
       font-weight: 700;
       box-shadow: 0 12px 30px rgba(37, 99, 235, 0.18);
-      flex-shrink: 0;
     }
 
     .brand-text {
@@ -110,9 +121,9 @@
     }
 
     .brand-text span {
+      margin-top: 4px;
       font-size: 12px;
       color: var(--muted);
-      margin-top: 4px;
       letter-spacing: 1.6px;
     }
 
@@ -130,48 +141,62 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      transition: 0.25s ease;
       white-space: nowrap;
+      font-size: 14px;
       color: var(--muted);
       background: rgba(255, 255, 255, 0.8);
       border: 1px solid rgba(15, 23, 42, 0.08);
+      transition:
+        color var(--transition),
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
     }
 
     .nav-link:hover {
       color: var(--accent);
       border-color: rgba(37, 99, 235, 0.18);
       background: rgba(37, 99, 235, 0.04);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     .hero {
-      padding: 52px 0 28px;
+      padding: 52px 0 24px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+      grid-template-columns: minmax(0, 1.34fr) minmax(320px, 0.66fr);
       gap: 22px;
       align-items: stretch;
     }
 
     .hero-main,
-    .hero-side {
-      background: var(--card);
+    .hero-side,
+    .forum-card,
+    .friend-box {
+      background: var(--surface);
       border: 1px solid var(--line);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-main,
+    .hero-side {
       border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
       backdrop-filter: blur(12px);
     }
 
     .hero-main {
       position: relative;
       overflow: hidden;
-      padding: 46px;
       min-height: 100%;
+      padding: 48px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      isolation: isolate;
     }
 
     .hero-main::before {
@@ -184,22 +209,29 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 68%);
       pointer-events: none;
+      z-index: 0;
+    }
+
+    .eyebrow,
+    .hero-title,
+    .hero-desc,
+    .hero-tags {
+      position: relative;
+      z-index: 1;
     }
 
     .eyebrow {
+      width: fit-content;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 8px 14px;
+      margin-bottom: 18px;
       border-radius: 999px;
       background: var(--accent-soft);
       color: var(--accent);
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 18px;
-      position: relative;
-      z-index: 1;
-      width: fit-content;
     }
 
     .eyebrow::before {
@@ -211,14 +243,13 @@
     }
 
     .hero-title {
+      max-width: 720px;
       font-size: clamp(38px, 6vw, 68px);
       line-height: 1.04;
       letter-spacing: -2px;
       color: var(--primary);
       font-weight: 800;
-      max-width: 720px;
-      position: relative;
-      z-index: 1;
+      text-wrap: balance;
     }
 
     .hero-desc {
@@ -226,8 +257,6 @@
       margin-top: 18px;
       font-size: 18px;
       color: var(--muted);
-      position: relative;
-      z-index: 1;
     }
 
     .hero-tags {
@@ -235,23 +264,26 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      position: relative;
-      z-index: 1;
     }
 
     .hero-tags a {
+      min-height: 42px;
+      padding: 0 16px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 42px;
-      padding: 0 16px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.08);
       color: #374151;
       font-size: 14px;
       font-weight: 500;
-      transition: 0.25s ease;
+      transition:
+        color var(--transition),
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
     }
 
     .hero-tags a:hover {
@@ -259,27 +291,26 @@
       border-color: rgba(37, 99, 235, 0.22);
       background: rgba(37, 99, 235, 0.05);
       transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     .hero-side {
       padding: 24px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      min-height: 100%;
     }
 
     .side-top {
       display: flex;
       flex-direction: column;
+      gap: 12px;
       height: 100%;
     }
 
     .side-top h3 {
       font-size: 16px;
-      color: var(--muted);
       font-weight: 600;
-      margin-bottom: 14px;
+      color: var(--muted);
     }
 
     .quick-grid {
@@ -290,33 +321,55 @@
     .quick-card {
       padding: 18px;
       border-radius: var(--radius-md);
-      background: rgba(255, 255, 255, 0.84);
+      background: var(--surface-soft);
       border: 1px solid rgba(15, 23, 42, 0.06);
-      transition: 0.25s ease;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
     }
 
     .quick-card:hover {
       transform: translateY(-2px);
       border-color: rgba(37, 99, 235, 0.18);
-      box-shadow: var(--shadow-soft);
+      box-shadow: var(--shadow-md);
+      background: rgba(255, 255, 255, 0.92);
     }
 
     .quick-card strong {
       display: block;
-      font-size: 15px;
       margin-bottom: 6px;
+      font-size: 15px;
+      font-weight: 700;
       color: var(--text);
     }
 
     .quick-card p {
       font-size: 13px;
-      color: var(--muted);
       line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .section,
+    .friend-section,
+    .ad-section {
+      scroll-margin-top: 90px;
     }
 
     .section {
-      padding: 14px 0 10px;
+      padding: 16px 0 10px;
+    }
+
+    .friend-section {
+      padding: 24px 0 10px;
+    }
+
+    .ad-section {
+      padding: 28px 0 8px;
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
     }
 
     .section-head {
@@ -329,13 +382,14 @@
 
     .section-head h2 {
       font-size: clamp(24px, 4vw, 34px);
+      line-height: 1.15;
       letter-spacing: -1px;
       color: var(--primary);
     }
 
     .section-head p {
-      color: var(--muted);
       font-size: 15px;
+      color: var(--muted);
     }
 
     .forum-grid {
@@ -345,117 +399,110 @@
     }
 
     .forum-card {
-      display: block;
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
-      transition: 0.25s ease;
       min-height: 100%;
+      display: block;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
     }
 
     .forum-card:hover {
       transform: translateY(-3px);
       border-color: rgba(37, 99, 235, 0.18);
       box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
+      background: rgba(255, 255, 255, 0.96);
     }
 
     .forum-icon {
       width: 42px;
       height: 42px;
+      margin-bottom: 16px;
       border-radius: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      margin-bottom: 16px;
       background: var(--accent-soft);
       color: var(--accent);
+      font-size: 18px;
+      box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.04);
     }
 
     .forum-card h3 {
-      font-size: 18px;
       margin-bottom: 8px;
+      font-size: 18px;
       color: var(--primary);
     }
 
     .forum-card p {
-      color: var(--muted);
       font-size: 14px;
-      margin-bottom: 0;
-    }
-
-    .friend-section {
-      padding: 24px 0 10px;
+      color: var(--muted);
     }
 
     .friend-box {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
       padding: 24px;
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
     }
 
     .friend-list {
+      margin-top: 14px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 14px;
     }
 
     .friend-item {
+      min-height: 44px;
+      padding: 0 18px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 0 18px;
       border-radius: 14px;
       background: rgba(255, 255, 255, 0.92);
       border: 1px solid rgba(15, 23, 42, 0.08);
-      transition: 0.25s ease;
+      color: var(--text);
       font-size: 14px;
       font-weight: 600;
-      color: var(--text);
+      transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        color var(--transition),
+        background var(--transition);
     }
 
     .friend-item:hover {
       transform: translateY(-2px);
-      border-color: rgba(37, 99, 235, 0.20);
-      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+      border-color: rgba(37, 99, 235, 0.2);
+      box-shadow: var(--shadow-sm);
       color: var(--accent);
+      background: rgba(255, 255, 255, 0.98);
     }
 
-    .ad-section {
-      padding: 28px 0 8px;
-    }
-
-    .ad-box {
-      padding: 0;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-    }
-
-    .ad-slot {
-      min-height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
+    .ad-section script,
+    .ad-section ins {
+      max-width: 100%;
     }
 
     footer {
       padding: 40px 0 52px;
       text-align: center;
-      color: var(--muted);
       font-size: 14px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--primary);
+      font-weight: 600;
+      transition: color var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--accent);
     }
 
     @media (max-width: 1080px) {
@@ -471,10 +518,15 @@
       .hero-side {
         border-radius: 26px;
       }
+
+      .hero-main {
+        padding: 40px;
+      }
     }
 
     @media (max-width: 720px) {
-      .container {
+      .container,
+      .ad-section {
         width: min(var(--container), calc(100% - 20px));
       }
 
@@ -516,7 +568,8 @@
         gap: 10px;
       }
 
-      .hero-tags a {
+      .hero-tags a,
+      .friend-item {
         width: 100%;
         justify-content: center;
       }
@@ -534,12 +587,16 @@
         flex-direction: column;
       }
 
-      .friend-item {
-        width: 100%;
+      .ad-section {
+        padding: 28px 0 8px;
       }
 
-      .ad-slot {
+      .ad-section ins {
         min-height: 80px;
+      }
+
+      footer {
+        padding: 34px 0 40px;
       }
     }
   </style>
@@ -656,23 +713,17 @@
     </section>
 
     <section class="ad-section" id="ad">
-      <div class="container">
-        <div class="ad-box">
-          <div class="ad-slot">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5671870713337337"
-              crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-              style="display:block"
-              data-ad-client="ca-pub-5671870713337337"
-              data-ad-slot="8619363412"
-              data-ad-format="auto"
-              data-full-width-responsive="true"></ins>
-            <script>
-              (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
-        </div>
-      </div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5671870713337337"
+        crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-5671870713337337"
+        data-ad-slot="8619363412"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+      <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </section>
   </main>
 

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>网谋论坛</title>
+  <meta name="description" content="网谋论坛（wm.lt），专注域名交流、站长交流、服务器交流。" />
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --bg-soft: #ffffff;
+      --card: rgba(255, 255, 255, 0.92);
+      --line: rgba(15, 23, 42, 0.08);
+      --line-strong: rgba(15, 23, 42, 0.12);
+      --text: #111827;
+      --muted: #6b7280;
+      --primary: #0f172a;
+      --accent: #2563eb;
+      --accent-deep: #1d4ed8;
+      --accent-soft: rgba(37, 99, 235, 0.10);
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 10px 26px rgba(15, 23, 42, 0.05);
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --container: 1180px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 26%),
+        radial-gradient(circle at 100% 0%, rgba(15, 23, 42, 0.05), transparent 20%),
+        linear-gradient(180deg, #f8fafc 0%, #f7f8fa 45%, #f3f4f6 100%);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    }
+
+    .nav {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #111827, #2563eb);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.18);
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .brand-text strong {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: 1.6px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: 0.25s ease;
+      white-space: nowrap;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .nav-link:hover {
+      color: var(--accent);
+      border-color: rgba(37, 99, 235, 0.18);
+      background: rgba(37, 99, 235, 0.04);
+    }
+
+    .hero {
+      padding: 52px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .hero-main,
+    .hero-side {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-main {
+      position: relative;
+      overflow: hidden;
+      padding: 46px;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      right: -140px;
+      top: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 68%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+      width: fit-content;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hero-title {
+      font-size: clamp(38px, 6vw, 68px);
+      line-height: 1.04;
+      letter-spacing: -2px;
+      color: var(--primary);
+      font-weight: 800;
+      max-width: 720px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-desc {
+      max-width: 620px;
+      margin-top: 18px;
+      font-size: 18px;
+      color: var(--muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tags {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tags a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #374151;
+      font-size: 14px;
+      font-weight: 500;
+      transition: 0.25s ease;
+    }
+
+    .hero-tags a:hover {
+      color: var(--accent);
+      border-color: rgba(37, 99, 235, 0.22);
+      background: rgba(37, 99, 235, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .hero-side {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: 100%;
+    }
+
+    .side-top {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .side-top h3 {
+      font-size: 16px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .quick-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .quick-card {
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      transition: 0.25s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 235, 0.18);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quick-card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .quick-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section {
+      padding: 14px 0 10px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(24px, 4vw, 34px);
+      letter-spacing: -1px;
+      color: var(--primary);
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .forum-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .forum-card {
+      display: block;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+      transition: 0.25s ease;
+      min-height: 100%;
+    }
+
+    .forum-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(37, 99, 235, 0.18);
+      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
+    }
+
+    .forum-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 16px;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .forum-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+
+    .forum-card p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 0;
+    }
+
+    .friend-section {
+      padding: 24px 0 10px;
+    }
+
+    .friend-box {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+    }
+
+    .friend-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .friend-item {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      transition: 0.25s ease;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .friend-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(37, 99, 235, 0.20);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.06);
+      color: var(--accent);
+    }
+
+    .ad-section {
+      padding: 28px 0 8px;
+    }
+
+    .ad-box {
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .ad-slot {
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    footer {
+      padding: 40px 0 52px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .forum-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-main,
+      .hero-side {
+        border-radius: 26px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(var(--container), calc(100% - 20px));
+      }
+
+      .nav {
+        min-height: 66px;
+      }
+
+      .nav-actions {
+        display: none;
+      }
+
+      .hero {
+        padding: 28px 0 18px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .forum-card,
+      .friend-box {
+        border-radius: 22px;
+      }
+
+      .hero-main,
+      .hero-side,
+      .forum-card,
+      .friend-box {
+        padding: 20px;
+      }
+
+      .hero-title {
+        letter-spacing: -1.2px;
+      }
+
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      .hero-tags {
+        gap: 10px;
+      }
+
+      .hero-tags a {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .forum-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .friend-list {
+        flex-direction: column;
+      }
+
+      .friend-item {
+        width: 100%;
+      }
+
+      .ad-slot {
+        min-height: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#top" class="brand">
+        <div class="brand-mark">谋</div>
+        <div class="brand-text">
+          <strong>网谋论坛</strong>
+          <span>WM.LT</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="#sections" class="nav-link">版块导航</a>
+        <a href="#friends" class="nav-link">友情链接</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div class="eyebrow">wm.lt</div>
+            <h1 class="hero-title">网谋论坛</h1>
+            <p class="hero-desc">
+              聚焦域名、建站、服务器与运维话题。
+            </p>
+
+            <div class="hero-tags">
+              <a href="https://wxscx.com" target="_blank" rel="noopener noreferrer">Whois查询</a>
+              <a href="https://ip.mrwang.com" target="_blank" rel="noopener noreferrer">IP查询</a>
+              <a href="https://huilv.wangxiansheng.com" target="_blank" rel="noopener noreferrer">汇率查询</a>
+              <a href="https://rili.wangxiansheng.com" target="_blank" rel="noopener noreferrer">万年历</a>
+            </div>
+          </div>
+
+          <aside class="hero-side">
+            <div class="side-top">
+              <h3>快速入口</h3>
+              <div class="quick-grid">
+                <a href="https://www.wangxiansheng.com" class="quick-card" target="_blank" rel="noopener noreferrer">
+                  <strong>王先生</strong>
+                  <p>拥有十余年实战经验，长期专注于 SEO、SEM 与 AI GEO，致力于帮助品牌在搜索与 AI 场景中实现持续曝光与业务增长。</p>
+                </a>
+                <a href="https://www.wangmou.com/" class="quick-card" target="_blank" rel="noopener noreferrer">
+                  <strong>网谋</strong>
+                  <p>网谋成立于 2024 年 04 月 30 日，是一家以自有资金进行投资的企业。</p>
+                </a>
+                <a href="https://guan.wang" class="quick-card" target="_blank" rel="noopener noreferrer">
+                  <strong>官网</strong>
+                  <p>网谋旗下站点，主要提供网站信息展示等内容。</p>
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sections">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>核心版块</h2>
+            <p>用更清晰的方式展示主要讨论方向。</p>
+          </div>
+        </div>
+
+        <div class="forum-grid">
+          <a href="#" class="forum-card">
+            <div class="forum-icon">域</div>
+            <h3>域名交流</h3>
+            <p>域名注册、抢注、买卖、估值、后缀趋势与投资思路。</p>
+          </a>
+
+          <a href="#" class="forum-card">
+            <div class="forum-icon">站</div>
+            <h3>站长交流</h3>
+            <p>网站搭建、SEO、流量、内容、变现与独立站经验分享。</p>
+          </a>
+
+          <a href="#" class="forum-card">
+            <div class="forum-icon">服</div>
+            <h3>服务器交流</h3>
+            <p>主机、线路、CDN、面板、环境部署和日常运维话题。</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="friend-section" id="friends">
+      <div class="container">
+        <div class="friend-box">
+          <div class="section-head" style="margin-bottom: 0;">
+            <div>
+              <h2>友情链接</h2>
+              <p>欢迎优质站点互换友链。</p>
+            </div>
+          </div>
+
+          <div class="friend-list">
+            <a class="friend-item" href="https://www.wangxiansheng.com" target="_blank" rel="noopener noreferrer">王先生</a>
+            <a class="friend-item" href="https://www.wangmou.com" target="_blank" rel="noopener noreferrer">网谋</a>
+            <a class="friend-item" href="https://guan.wang" target="_blank" rel="noopener noreferrer">官网</a>
+            <a class="friend-item" href="https://www.beiyong.com" target="_blank" rel="noopener noreferrer">备用</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ad-section" id="ad">
+      <div class="container">
+        <div class="ad-box">
+          <div class="ad-slot">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5671870713337337"
+              crossorigin="anonymous"></script>
+            <ins class="adsbygoogle"
+              style="display:block"
+              data-ad-client="ca-pub-5671870713337337"
+              data-ad-slot="8619363412"
+              data-ad-format="auto"
+              data-full-width-responsive="true"></ins>
+            <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 网谋论坛 · wm.lt
+  </footer>
+</body>
+</html>
